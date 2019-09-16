@@ -1,5 +1,6 @@
 const http = require('http');
 const url = require('url');
+const dateFormat = require('dateformat');
 
 let cnt = 0;
 
@@ -18,8 +19,12 @@ http.createServer((req, res) => {
         res.end(JSON.stringify(obj));
     } else if (parsedUrl.pathname == '/sum') {
         res.writeHead(200, {'Content-type': 'application/json'});
+        let d = new Date();
         let obj = {};
         obj.action = "sum";
+        obj.date = d;
+        obj.czdate = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+        obj.czdate2 = dateFormat(d, "dd.mm.yyyy HH:MM:ss");
         obj.num1 = Number(parsedUrl.query["n1"]);
         obj.num2 = Number(parsedUrl.query["n2"]);
         obj.sum = obj.num1 + obj.num2;
