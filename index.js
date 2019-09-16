@@ -2,6 +2,8 @@ const http = require('http');
 const url = require('url');
 const dateFormat = require('dateformat');
 
+const CZ_DOW = ["Neděle","Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota"];
+
 let cnt = 0;
 
 http.createServer((req, res) => {
@@ -25,6 +27,7 @@ http.createServer((req, res) => {
         obj.date = d;
         obj.czdate = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
         obj.czdate2 = dateFormat(d, "dd.mm.yyyy HH:MM:ss");
+        obj.czdow = CZ_DOW[d.getDay()];
         obj.num1 = Number(parsedUrl.query["n1"]);
         obj.num2 = Number(parsedUrl.query["n2"]);
         obj.sum = obj.num1 + obj.num2;
